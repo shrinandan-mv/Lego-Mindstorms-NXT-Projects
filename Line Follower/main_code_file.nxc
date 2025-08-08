@@ -1,0 +1,44 @@
+task main()
+{
+     int white_val = 58;
+     int mostly_white = 51;
+     int mostly_black = 40;
+     int black_val = 33;
+     float ideal = (white_val + black_val)/2;
+
+
+     SetSensorLight(S1);
+
+     while(true)
+     {
+          int light_val = Sensor(S1);
+
+          if(light_val >= mostly_white)
+          {
+               OnRev(OUT_C, 25);
+               OnRev(OUT_A, 0);
+          }
+          else if(light_val >= ideal)
+          {
+               OnRev(OUT_C, 25);
+               OnRev(OUT_A, 10);
+          }
+          else if(light_val <= mostly_black)
+          {
+               OnRev(OUT_A, 25);
+               OnRev(OUT_C, 0);
+          }
+          else if(light_val < ideal)
+          {
+               OnRev(OUT_A, 25);
+               OnRev(OUT_C, 10);
+          }
+
+          TextOut(0, LCD_LINE1, "Ideal: ");
+          NumOut(0, LCD_LINE2, ideal);
+          TextOut(0, LCD_LINE3, "Light_val: ");
+          NumOut(0, LCD_LINE4, light_val);
+
+          Wait(200);
+     }
+}
