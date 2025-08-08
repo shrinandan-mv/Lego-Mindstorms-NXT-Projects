@@ -1,0 +1,47 @@
+task main()
+{
+    ResetRotationCount(OUT_A);
+
+    ClearScreen();
+    TextOut(0, LCD_LINE1, "Measure length");
+    TextOut(0, LCD_LINE2, "Then press ENTER");
+
+    while (ButtonPressed(BTN4, false) == 0)
+    {
+        Wait(50);  // check every 50ms
+    }
+
+    int degrees_rotated = MotorRotationCount(OUT_A);
+    float length = abs(degrees_rotated * (3.14159/180) * 1.102362);
+
+    ClearScreen();
+    TextOut(0, LCD_LINE1, "Degrees rotated:");
+    NumOut(0, LCD_LINE2, degrees_rotated);
+    TextOut(0, LCD_LINE3, "Length:");
+    NumOut(0, LCD_LINE4, length);
+
+    while (ButtonPressed(BTN4, false) == 0)
+    {
+        Wait(50);  // check every 50ms
+    }
+    
+    ResetRotationCount(OUT_A);
+    
+    ClearScreen();
+    TextOut(0, LCD_LINE1, "Measure breadth");
+    TextOut(0, LCD_LINE2, "Then press ENTER");
+    
+    while (ButtonPressed(BTN4, false) == 0)
+    {
+        Wait(50);
+    }
+    
+    degrees_rotated = MotorRotationCount(OUT_A);
+    float breadth = abs(degrees_rotated * (3.14159/180) * 1.102362);
+    
+    ClearScreen();
+    TextOut(0, LCD_LINE1, "Area:");
+    NumOut(0, LCD_LINE4, length*breadth);
+    
+
+}
