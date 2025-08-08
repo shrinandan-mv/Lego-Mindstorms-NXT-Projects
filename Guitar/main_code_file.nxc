@@ -1,0 +1,49 @@
+task main()
+{
+    SetSensorLowspeed(S1);    // Initialize ultrasonic sensor on port S1
+    SetSoundVolume(10);      // Set volume (0 to 100)
+
+    int distance;
+
+    while (true)
+    {
+        distance = SensorUS(S1);  // Read distance in cm
+
+        ClearScreen();
+        TextOut(0, LCD_LINE1, "Distance (cm):");
+        NumOut(0, LCD_LINE2, distance);
+        TextOut(0, LCD_LINE4, "Press ENTER to play");
+
+        // Check if orange (Enter) button is pressed
+        if (ButtonPressed(BTN4, false))
+        {
+            if (distance <= 10)
+            {
+                PlayFile("note4.rso");
+            }
+            else if (distance >= 11 && distance <= 15)
+            {
+                PlayFile("note5.rso");
+            }
+            else if (distance >= 16 && distance <= 20)
+            {
+                PlayFile("note3.rso");
+            }
+            else if (distance >= 21 && distance <= 25)
+            {
+                PlayFile("note1.rso");
+            }
+            else if (distance >= 26)
+            {
+                PlayFile("note2.rso");
+            }
+
+            // Wait until the button is released before continuing
+            while (ButtonPressed(BTN4, false)) {
+                Wait(10);
+            }
+        }
+
+        Wait(100);  // Short delay to reduce CPU usage
+    }
+}
